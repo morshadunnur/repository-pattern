@@ -1,7 +1,7 @@
 {
     "name": "morshadun/repositorypattern",
-    "description": ":description",
-    "license": "license",
+    "description": "Laravel Service Repository Design Pattern Scaffolding.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Md Morshadun Nur",
