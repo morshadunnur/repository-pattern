@@ -6,10 +6,10 @@
         {
             "name": "Md Morshadun Nur",
             "email": "me@morshadunnur.me",
-            "homepage": "https://github.com/morshadun/repositorypattern"
+            "homepage": "https://github.com/morshadunnur/repository-pattern"
         }
     ],
-    "homepage": "https://github.com/morshadun/repositorypattern",
+    "homepage": "https://github.com/morshadunnur/repository-pattern",
     "keywords": ["Laravel", "RepositoryPattern"],
     "require": {
         "illuminate/support": "~5|~6"
