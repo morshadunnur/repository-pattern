@@ -1,1 +1,0 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":241:{a:2:{s:7:"defects";a:1:{s:85:"Morshadun\RepositoryPattern\Tests\DesignPatternCommandTest::new_controller_is_created";i:5;}s:5:"times";a:1:{s:85:"Morshadun\RepositoryPattern\Tests\DesignPatternCommandTest::new_controller_is_created";d:0.15;}}}
