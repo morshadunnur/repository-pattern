@@ -39,7 +39,7 @@ Please see the [changelog](changelog.md) for more information on what has change
 ## Testing
 
 ``` bash
-$ composer test
+$ vendor/bin/phpunit --filter new_controller_is_created
 ```
 
 ## Contributing
