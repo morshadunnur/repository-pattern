@@ -14,7 +14,7 @@ class DesignPatternCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature =  'morshadun:controller {name : The Name of the controller}';
+    protected $signature =  'morshadun:controller {name : The Name of the controller} {repository? : Repository Name} {service? : Service Name} {transformer? : Transformer Name}';
 
     /**
      * The console command description.
@@ -37,7 +37,7 @@ class DesignPatternCommand extends GeneratorCommand
     public function handle()
     {
 
-        $name = $this->qualifyClass($this->getNameInput());
+        $name = $this->qualifyClass($this->argument('name'));
 
         $path = $this->getPath($name);
 
@@ -47,7 +47,7 @@ class DesignPatternCommand extends GeneratorCommand
         // code is untouched. Otherwise, we will continue generating this class' files.
         if ((! $this->hasOption('force') ||
                 ! $this->option('force')) &&
-            $this->alreadyExists($this->getNameInput())) {
+            $this->alreadyExists($this->argument('name'))) {
             $this->error($this->type.' already exists!');
 
             return false;
@@ -60,27 +60,45 @@ class DesignPatternCommand extends GeneratorCommand
 
         $this->files->put($path, $this->sortImports($this->buildClass($name)));
         $repository = $this->confirm('Do You want to create repository?', true);
-        if ($repository)
+        if ($repository && !empty($this->argument('repository')))
         {
-            $repositoryName = $this->qualifyRepositoryClass(Str::replaceFirst('Controller', 'Repository', $this->getNameInput()));
+            $repositoryName = $this->qualifyRepositoryClass(Str::replaceFirst('Controller', 'Repository', $this->argument('repository')));
+            $repositoryPath = $this->getPath($repositoryName);
+            $this->makeDirectory($repositoryPath);
+            $this->files->put($repositoryPath, $this->sortImports($this->buildRepositoryClass($repositoryName)));
+            $this->info($repositoryName . ' created successfully.');
+        }else{
+            $repositoryName = $this->qualifyRepositoryClass(Str::replaceFirst('Controller', 'Repository', $this->argument('name')));
             $repositoryPath = $this->getPath($repositoryName);
             $this->makeDirectory($repositoryPath);
             $this->files->put($repositoryPath, $this->sortImports($this->buildRepositoryClass($repositoryName)));
             $this->info($repositoryName . ' created successfully.');
         }
         $services = $this->confirm('Do You want to create services?', true);
-        if ($services)
+        if ($services && !empty($this->argument('service')))
         {
-            $servicesName = $this->qualifyServicesClass(Str::replaceFirst('Controller', 'Services', $this->getNameInput()));
+            $servicesName = $this->qualifyServicesClass(Str::replaceFirst('Controller', 'Services', $this->argument('service')));
+            $servicesPath = $this->getPath($servicesName);
+            $this->makeDirectory($servicesPath);
+            $this->files->put($servicesPath, $this->sortImports($this->buildServicesClass($servicesName)));
+            $this->info($servicesName . ' created successfully.');
+        }else{
+            $servicesName = $this->qualifyServicesClass(Str::replaceFirst('Controller', 'Services', $this->argument('name')));
             $servicesPath = $this->getPath($servicesName);
             $this->makeDirectory($servicesPath);
             $this->files->put($servicesPath, $this->sortImports($this->buildServicesClass($servicesName)));
             $this->info($servicesName . ' created successfully.');
         }
         $transformers = $this->confirm('Do You want to create transformers?', true);
-        if ($transformers)
+        if ($transformers && !empty($this->argument('transformer')))
         {
-            $transformersName = $this->qualifyTransformersClass(Str::replaceFirst('Controller', 'Transformer', $this->getNameInput()));
+            $transformersName = $this->qualifyTransformersClass(Str::replaceFirst('Controller', 'Transformer', $this->argument('transformer')));
+            $transformersPath = $this->getPath($transformersName);
+            $this->makeDirectory($transformersPath);
+            $this->files->put($transformersPath, $this->sortImports($this->buildTransformersClass($transformersName)));
+            $this->info($transformersName . ' created successfully.');
+        }else{
+            $transformersName = $this->qualifyTransformersClass(Str::replaceFirst('Controller', 'Transformer', $this->argument('name')));
             $transformersPath = $this->getPath($transformersName);
             $this->makeDirectory($transformersPath);
             $this->files->put($transformersPath, $this->sortImports($this->buildTransformersClass($transformersName)));
